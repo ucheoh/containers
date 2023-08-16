@@ -1,15 +1,16 @@
 version: "3"
 services:
   web:
-    build: .
+    image: btholt/node-app
     ports:
       - "3000:3000"
-    volumes:
-      - .:/home/node/app
-      - /home/node/app/node_modules
     links:
       - db
+    labels:
+      kompose.service.type: LoadBalancer
     environment:
       MONGO_CONNECTION_STRING: "mongodb://db:27017"
   db:
     image: mongo:3
+    ports:
+      - "27017"
